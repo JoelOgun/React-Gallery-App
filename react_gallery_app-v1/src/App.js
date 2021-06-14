@@ -1,6 +1,10 @@
 import React, { Component } from "react";
-import "./index.css";
-//import "./App.css";
+
+//import SearchForm from "./components/SearchForm";
+import "./App.css";
+import "./css/index.css";
+
+import SearchForm from "./components/SearchForm";
 
 class App extends Component {
   render() {
@@ -8,6 +12,8 @@ class App extends Component {
       <div>
         <h1>Search App</h1>
         <p>This is a simple search app</p>
+        <SearchForm />
+        {/*<SearchForm /> */}
       </div>
     );
   }
