@@ -7202,6 +7202,9 @@
   dependencies:
     "find-up" "^2.1.0"
 
+"plugins@@babel/plugin-proposal-class-properties":
+  "resolved" "file:@babel/plugin-proposal-class-properties"
+
 "pluralize@^7.0.0":
   "integrity" "sha512-ARhBOdzS3e41FbkW/XWrTEtukqqLoK5+Z/4UeDaLuSW+39JPeFgs4gCGqsrJHVZX0fUrx//4OF0K1CUGwlIFow=="
   "resolved" "https://registry.npmjs.org/pluralize/-/pluralize-7.0.0.tgz"
