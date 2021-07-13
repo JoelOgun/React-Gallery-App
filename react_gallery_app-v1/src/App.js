@@ -115,7 +115,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename="/react-gallery-app-v1">
         <div className="container">
           <SearchForm query={this.state.query} onSearch={this.performSearch} />
           <Nav />
