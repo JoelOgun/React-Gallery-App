@@ -1,32 +1,170 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import axios from "axios";
 //import SearchForm from "./components/SearchForm";
 import "./App.css";
 import "./css/index.css";
-
 import Nav from "./components/nav";
 import SearchForm from "./components/SearchForm";
+import Gallery from "./components/Gallery";
+import NotFound from "./components/NotFound";
+
+//import Apikeys
+const apiKey = process.env.REACT_APP_Flickr_API_KEY;
+console.log(apiKey);
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: [],
+      sunsets: [],
+      cats: [],
+      dogs: [],
+      computers: [],
+      loading: true,
+      searchText: "",
+    };
+  }
+
+  componentDidMount() {
+    this.catSearch();
+    this.dogSearch();
+    this.computerSearch();
+    this.sunsetDefault();
+  }
+
+  performSearch = (query = this.search) => {
+    axios
+      .get(
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
+      )
+      .then((response) => {
+        this.setState({
+          search: response.data.photos.photo,
+          loading: true,
+        });
+      })
+      .catch((error) => {
+        console.log("Error fetching and parsing data", error);
+      });
+  };
+  sunsetDefault = (query = "sunset") => {
+    axios
+      .get(
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
+      )
+      .then((response) => {
+        this.setState({
+          sunsets: response.data.photos.photo,
+          loading: false,
+        });
+      })
+      .catch((error) => {
+        console.log("Error fetching and parsing data", error);
+      });
+  };
+
+  catSearch = (query = "Cats") => {
+    axios
+      .get(
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
+      )
+      .then((response) => {
+        this.setState({
+          cats: response.data.photos.photo,
+          loading: false,
+        });
+      })
+      .catch((error) => {
+        console.log("Error fetching and parsing data", error);
+      });
+  };
+
+  dogSearch = (query = "Dogs") => {
+    axios
+      .get(
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
+      )
+      .then((response) => {
+        this.setState({
+          dogs: response.data.photos.photo,
+          loading: false,
+        });
+      })
+      .catch((error) => {
+        console.log("Error fetching and parsing data", error);
+      });
+  };
+
+  computerSearch = (query = "Computers") => {
+    axios
+      .get(
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
+      )
+      .then((response) => {
+        this.setState({
+          computers: response.data.photos.photo,
+          loading: false,
+        });
+      })
+      .catch((error) => {
+        console.log("Error fetching and parsing data", error);
+      });
+  };
+
   render() {
     return (
       <Router>
         <div className="container">
-          <SearchForm />
+          <SearchForm query={this.state.query} onSearch={this.performSearch} />
           <Nav />
-
-          {/* A <Switch> looks through its children <Route>s and
-           renders the first one that matches the current URL. */}
           <Switch>
-            <Route exact path="/">
-              Cats Gif
-            </Route>
-            <Route exact path="/">
-              Dogs
-            </Route>
-            <Route exact path="/">
-              Birds
-            </Route>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Gallery
+                  data={this.state.sunsets}
+                  loading={this.state.loading}
+                />
+              )}
+            />
+            <Route
+              exact
+              path={"/search/:query"}
+              render={() => (
+                <Gallery
+                  data={this.state.search}
+                  loading={this.state.loading}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/cats"
+              render={() => (
+                <Gallery data={this.state.cats} loading={this.state.loading} />
+              )}
+            />
+            <Route
+              exact
+              path="/dogs"
+              render={() => (
+                <Gallery data={this.state.dogs} loading={this.state.loading} />
+              )}
+            />
+            <Route
+              exact
+              path="/computers"
+              render={() => (
+                <Gallery
+                  data={this.state.computers}
+                  loading={this.state.loading}
+                />
+              )}
+            />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </Router>

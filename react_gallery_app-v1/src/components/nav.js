@@ -7,13 +7,13 @@ class Nav extends React.Component {
       <nav class="main-nav">
         <ul>
           <li>
-            <NavLink to="0">Cats</NavLink>
+            <NavLink to="/cats">Cats</NavLink>
           </li>
           <li>
-            <NavLink to="0">Dogs</NavLink>
+            <NavLink to="/dogs">Dogs</NavLink>
           </li>
           <li>
-            <NavLink to="0">Computers</NavLink>
+            <NavLink to="/computers">Computers</NavLink>
           </li>
         </ul>
       </nav>
