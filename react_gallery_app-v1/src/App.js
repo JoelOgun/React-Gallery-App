@@ -18,7 +18,7 @@ class App extends Component {
     super(props);
     this.state = {
       search: [],
-      sunsets: [],
+      garifuna: [],
       cats: [],
       dogs: [],
       computers: [],
@@ -31,7 +31,7 @@ class App extends Component {
     this.catSearch();
     this.dogSearch();
     this.computerSearch();
-    this.sunsetDefault();
+    this.garifunaDefault();
   }
 
   performSearch = (query = this.search) => {
@@ -49,14 +49,14 @@ class App extends Component {
         console.log("Error fetching and parsing data", error);
       });
   };
-  sunsetDefault = (query = "sunset") => {
+  garifunaDefault = (query = "garifuna") => {
     axios
       .get(
         `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
       )
       .then((response) => {
         this.setState({
-          sunsets: response.data.photos.photo,
+          garifuna: response.data.photos.photo,
           loading: false,
         });
       })
@@ -125,7 +125,7 @@ class App extends Component {
               path="/"
               render={() => (
                 <Gallery
-                  data={this.state.sunsets}
+                  data={this.state.garifuna}
                   loading={this.state.loading}
                 />
               )}
